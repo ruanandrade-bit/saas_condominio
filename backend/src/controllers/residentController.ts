@@ -1,0 +1,251 @@
+import { Response } from 'express';
+import bcrypt from 'bcryptjs';
+import Resident from '../models/Resident';
+import User from '../models/User';
+import Unit from '../models/Unit';
+import { AuthRequest } from '../middlewares/auth';
+
+export const createResident = async (req: AuthRequest, res: Response): Promise<void> => {
+  let createdUserId: string | undefined;
+  let createdResidentId: string | undefined;
+
+  try {
+    const { name, phone, email, unitId, type, isFinancialResponsible, createAccount, password } = req.body;
+    const condominiumId = req.user!.condominiumId;
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+
+    if (!condominiumId) {
+      res.status(409).json({ error: 'Usuário sem condomínio vinculado' });
+      return;
+    }
+
+    if (!name?.trim() || !unitId) {
+      res.status(400).json({ error: 'Nome e unidade são obrigatórios' });
+      return;
+    }
+
+    const unit = await Unit.findOne({ _id: unitId, condominiumId });
+    if (!unit) {
+      res.status(400).json({ error: 'Unidade inválida para este condomínio' });
+      return;
+    }
+
+    let userId;
+
+    if (createAccount) {
+      if (!normalizedEmail) {
+        res.status(400).json({ error: 'E-mail é obrigatório para criar a conta de acesso' });
+        return;
+      }
+      if (!password || password.length < 6) {
+        res.status(400).json({ error: 'A senha deve ter pelo menos 6 caracteres' });
+        return;
+      }
+
+      const existingUser = await User.findOne({ email: normalizedEmail });
+      if (existingUser) {
+        res.status(409).json({ error: 'Já existe um usuário com este e-mail' });
+        return;
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password || '123456', salt);
+
+      const user = await User.create({
+        name: name.trim(),
+        email: normalizedEmail,
+        password: hashedPassword,
+        phone: phone || '',
+        role: 'resident',
+        condominiumId,
+        unitId: unit._id,
+      });
+      userId = user._id;
+      createdUserId = user.id;
+    }
+
+    const resident = await Resident.create({
+      condominiumId,
+      unitId: unit._id,
+      name: name.trim(),
+      phone: phone || '',
+      email: normalizedEmail,
+      type: type || 'owner',
+      isFinancialResponsible: Boolean(isFinancialResponsible),
+      userId,
+    });
+    createdResidentId = resident.id;
+
+    if (unit.status === 'empty') {
+      unit.status = 'occupied';
+      await unit.save();
+    }
+
+    res.status(201).json(resident);
+  } catch (error: any) {
+    if (createdResidentId) {
+      await Resident.findByIdAndDelete(createdResidentId).catch(() => undefined);
+    }
+    if (createdUserId) {
+      await User.findByIdAndDelete(createdUserId).catch(() => undefined);
+    }
+    res.status(500).json({ error: 'Erro ao cadastrar morador', details: error.message });
+  }
+};
+
+export const getResidents = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const residents = await Resident.find({ condominiumId: req.user!.condominiumId })
+      .populate('unitId', 'block number')
+      .sort({ name: 1 });
+    res.json(residents);
+  } catch (error: any) {
+    res.status(500).json({ error: 'Erro ao buscar moradores', details: error.message });
+  }
+};
+
+export const getResident = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const resident = await Resident.findOne({
+      _id: req.params.id,
+      condominiumId: req.user!.condominiumId,
+    }).populate('unitId', 'block number');
+
+    if (!resident) {
+      res.status(404).json({ error: 'Morador não encontrado' });
+      return;
+    }
+    res.json(resident);
+  } catch (error: any) {
+    res.status(500).json({ error: 'Erro ao buscar morador', details: error.message });
+  }
+};
+
+export const updateResident = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const condominiumId = req.user!.condominiumId;
+    const resident = await Resident.findOne({
+      _id: req.params.id,
+      condominiumId,
+    });
+
+    if (!resident) {
+      res.status(404).json({ error: 'Morador não encontrado' });
+      return;
+    }
+
+    const name = String(req.body.name || '').trim();
+    const unitId = req.body.unitId;
+    const normalizedEmail = String(req.body.email || '').trim().toLowerCase();
+
+    if (!name || !unitId) {
+      res.status(400).json({ error: 'Nome e unidade são obrigatórios' });
+      return;
+    }
+
+    const unit = await Unit.findOne({ _id: unitId, condominiumId });
+    if (!unit) {
+      res.status(400).json({ error: 'Unidade inválida para este condomínio' });
+      return;
+    }
+
+    const linkedUser = resident.userId
+      ? await User.findOne({ _id: resident.userId, condominiumId, role: 'resident' })
+      : null;
+
+    if (linkedUser && !normalizedEmail) {
+      res.status(400).json({ error: 'E-mail é obrigatório para moradores com acesso' });
+      return;
+    }
+
+    if (linkedUser && normalizedEmail) {
+      const emailInUse = await User.exists({
+        email: normalizedEmail,
+        _id: { $ne: linkedUser._id },
+      });
+      if (emailInUse) {
+        res.status(409).json({ error: 'Já existe um usuário com este e-mail' });
+        return;
+      }
+    }
+
+    const previousUnitId = resident.unitId;
+    resident.name = name;
+    resident.phone = req.body.phone || '';
+    resident.email = normalizedEmail;
+    resident.unitId = unit._id as any;
+    resident.type = req.body.type || 'owner';
+    resident.isFinancialResponsible = Boolean(req.body.isFinancialResponsible);
+    await resident.save();
+
+    if (linkedUser) {
+      linkedUser.name = resident.name;
+      linkedUser.phone = resident.phone;
+      linkedUser.email = resident.email;
+      linkedUser.unitId = resident.unitId;
+      await linkedUser.save();
+    }
+
+    if (unit.status === 'empty') {
+      unit.status = 'occupied';
+      await unit.save();
+    }
+
+    if (previousUnitId.toString() !== unit.id) {
+      const oldUnitStillOccupied = await Resident.exists({
+        condominiumId,
+        unitId: previousUnitId,
+      });
+      if (!oldUnitStillOccupied) {
+        await Unit.updateOne(
+          { _id: previousUnitId, condominiumId, status: 'occupied' },
+          { status: 'empty' }
+        );
+      }
+    }
+
+    res.json(resident);
+  } catch (error: any) {
+    res.status(500).json({ error: 'Erro ao atualizar morador', details: error.message });
+  }
+};
+
+export const deleteResident = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const resident = await Resident.findOneAndDelete({
+      _id: req.params.id,
+      condominiumId: req.user!.condominiumId,
+    });
+    if (!resident) {
+      res.status(404).json({ error: 'Morador não encontrado' });
+      return;
+    }
+
+    if (resident.userId) {
+      await User.findOneAndDelete({
+        _id: resident.userId,
+        condominiumId: req.user!.condominiumId,
+        role: 'resident',
+      });
+    }
+
+    const unitStillOccupied = await Resident.exists({
+      condominiumId: req.user!.condominiumId,
+      unitId: resident.unitId,
+    });
+    if (!unitStillOccupied) {
+      await Unit.updateOne(
+        {
+          _id: resident.unitId,
+          condominiumId: req.user!.condominiumId,
+          status: 'occupied',
+        },
+        { status: 'empty' }
+      );
+    }
+
+    res.json({ message: 'Morador excluído com sucesso' });
+  } catch (error: any) {
+    res.status(500).json({ error: 'Erro ao excluir morador', details: error.message });
+  }
+};
