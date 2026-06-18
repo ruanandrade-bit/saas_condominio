@@ -100,13 +100,13 @@ const ChargesPage: React.FC = () => {
   return (
     <div>
       <Header title="Cobranças" subtitle={`${charges.length} cobranças`} onMenuClick={onMenuClick}
-        actions={<div className="flex gap-2">
+        actions={<div className="flex flex-wrap justify-end gap-2">
           <Button variant="secondary" onClick={() => setBulkOpen(true)} icon={<Layers className="w-4 h-4" />} size="sm">Em massa</Button>
           <Button onClick={() => { setForm({ unitId: '', referenceMonth: '', amount: condo?.defaultFee?.toString() || '', dueDate: '', description: 'Taxa condominial' }); setModalOpen(true); }} icon={<Plus className="w-4 h-4" />} size="sm">Nova</Button>
         </div>} />
       <div className="p-4 sm:p-6 space-y-4 animate-fade-in">
         {/* Filters */}
-        <div className="surface-card flex flex-col gap-3 p-4 sm:flex-row sm:items-end">
+        <div className="filter-bar flex flex-col gap-3 sm:flex-row sm:items-end">
           <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
             options={[{ value: 'pending', label: 'Pendente' }, { value: 'paid', label: 'Pago' }, { value: 'late', label: 'Atrasado' }]} placeholder="Status" />
           <Input type="month" value={filterMonth} onChange={(e) => setFilterMonth(e.target.value)} placeholder="Mês" />
@@ -115,7 +115,7 @@ const ChargesPage: React.FC = () => {
         {charges.length === 0 ? (
           <EmptyState icon={<Receipt className="w-8 h-8" />} title="Nenhuma cobrança" description="Crie sua primeira cobrança para começar." />
         ) : (
-          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <div className="surface-card overflow-x-auto">
             <table className="w-full">
               <thead><tr className="bg-slate-50 border-b border-slate-200">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Unidade</th>
@@ -192,10 +192,10 @@ const ChargesPage: React.FC = () => {
       <Modal isOpen={whatsOpen} onClose={() => setWhatsOpen(false)} title="Enviar WhatsApp">
         <div className="space-y-3">
           {(['reminder', 'due_today', 'friendly_late', 'formal_late'] as const).map((type) => {
-            const labels = { reminder: '📩 Lembrete', due_today: '📅 Dia do vencimento', friendly_late: '😊 Atraso amigável', formal_late: '📋 Cobrança formal' };
+            const labels = { reminder: 'Lembrete', due_today: 'Dia do vencimento', friendly_late: 'Atraso amigável', formal_late: 'Cobrança formal' };
             return (
-              <div key={type} className="border border-slate-200 rounded-lg p-3">
-                <p className="text-sm font-medium mb-2">{labels[type]}</p>
+              <div key={type} className="rounded-lg border border-slate-200 bg-slate-50/70 p-3">
+                <p className="mb-2 text-sm font-bold text-slate-900">{labels[type]}</p>
                 <div className="flex gap-2">
                   <Button size="sm" variant="success" onClick={() => selectedCharge && handleWhatsApp(selectedCharge, type)} icon={<MessageCircle className="w-3.5 h-3.5" />}>Enviar</Button>
                   <Button size="sm" variant="secondary" onClick={() => selectedCharge && copyMessage(selectedCharge, type)} icon={<Copy className="w-3.5 h-3.5" />}>Copiar</Button>

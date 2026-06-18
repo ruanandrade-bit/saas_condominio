@@ -53,14 +53,13 @@ const Register: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f4f7fb] lg:grid lg:grid-cols-[360px_1fr]">
-      <aside className="auth-grid relative hidden min-h-screen overflow-hidden bg-slate-950 p-9 lg:flex lg:flex-col">
-        <div className="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-blue-600/20 blur-[90px]" />
+      <aside className="auth-grid relative hidden min-h-screen overflow-hidden bg-[#111827] bg-[linear-gradient(135deg,rgba(37,99,235,0.2),transparent_44%,rgba(16,185,129,0.14))] p-9 lg:flex lg:flex-col">
         <div className="relative z-10">
           <BrandMark inverted />
         </div>
         <div className="relative z-10 my-auto">
           <p className="eyebrow text-blue-300">Comece agora</p>
-          <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-[-0.05em] text-white">
+          <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white">
             Seu condomínio merece uma gestão à altura.
           </h1>
           <p className="mt-5 text-sm font-medium leading-6 text-slate-400">
@@ -81,7 +80,7 @@ const Register: React.FC = () => {
         </Link>
       </aside>
 
-      <main className="flex min-h-screen justify-center px-4 py-8 sm:px-8 lg:overflow-y-auto lg:px-12 lg:py-12">
+      <main className="flex min-h-screen justify-center bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(241,245,249,0.78)),linear-gradient(90deg,rgba(15,23,42,0.032)_1px,transparent_1px),linear-gradient(rgba(15,23,42,0.032)_1px,transparent_1px)] bg-[size:auto,34px_34px,34px_34px] px-4 py-8 sm:px-8 lg:overflow-y-auto lg:px-12 lg:py-12">
         <div className="w-full max-w-3xl animate-fade-in">
           <div className="mb-8 flex items-center justify-between lg:hidden">
             <BrandMark />
@@ -90,7 +89,7 @@ const Register: React.FC = () => {
 
           <div className="mb-8">
             <p className="eyebrow mb-3">Nova conta</p>
-            <h1 className="text-3xl font-extrabold tracking-[-0.045em] text-slate-950 sm:text-4xl">Configure sua gestão</h1>
+            <h1 className="text-3xl font-extrabold text-slate-950 sm:text-4xl">Configure sua gestão</h1>
             <p className="mt-2 max-w-xl text-sm font-medium leading-6 text-slate-500">
               Informe seus dados e as configurações iniciais do condomínio. Você poderá editar tudo depois.
             </p>
@@ -99,11 +98,11 @@ const Register: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <section className="surface-card p-5 sm:p-7">
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
                   <UserRound className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-base font-extrabold tracking-[-0.02em] text-slate-950">Dados do responsável</h2>
+                  <h2 className="text-base font-extrabold text-slate-950">Dados do responsável</h2>
                   <p className="mt-0.5 text-xs font-medium text-slate-500">Seu acesso administrativo à plataforma</p>
                 </div>
               </div>
@@ -117,11 +116,11 @@ const Register: React.FC = () => {
 
             <section className="surface-card p-5 sm:p-7">
               <div className="mb-6 flex items-center gap-3 border-b border-slate-100 pb-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
                   <Building2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-base font-extrabold tracking-[-0.02em] text-slate-950">Dados do condomínio</h2>
+                  <h2 className="text-base font-extrabold text-slate-950">Dados do condomínio</h2>
                   <p className="mt-0.5 text-xs font-medium text-slate-500">Informações básicas para iniciar a operação</p>
                 </div>
               </div>

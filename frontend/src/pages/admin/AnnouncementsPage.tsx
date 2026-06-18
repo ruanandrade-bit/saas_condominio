@@ -8,7 +8,7 @@ import Textarea from '../../components/ui/Textarea';
 import Modal from '../../components/ui/Modal';
 import EmptyState from '../../components/ui/EmptyState';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import { Plus, Pencil, Trash2, Pin, Megaphone, MessageCircle, Copy } from 'lucide-react';
+import { Plus, Pencil, Trash2, Pin, Megaphone, Copy } from 'lucide-react';
 import { formatDate, categoryLabels } from '../../utils/helpers';
 import api from '../../services/api';
 import { Announcement } from '../../types';
@@ -66,13 +66,13 @@ const AnnouncementsPage: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {list.map((a) => (
-              <div key={a._id} className={`bg-white rounded-xl border p-5 sm:p-6 ${a.isPinned ? 'border-blue-300 ring-1 ring-blue-100' : 'border-slate-200'}`}>
+              <div key={a._id} className={`premium-list-card p-5 sm:p-6 ${a.isPinned ? 'border-blue-300 ring-1 ring-blue-100' : ''}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       {a.isPinned && <Pin className="w-4 h-4 text-blue-600" />}
                       <h3 className="font-semibold text-slate-900">{a.title}</h3>
-                      <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">{categoryLabels[a.category]}</span>
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600">{categoryLabels[a.category]}</span>
                     </div>
                     <p className="text-sm text-slate-600 whitespace-pre-wrap">{a.message}</p>
                     <p className="text-xs text-slate-400 mt-2">{formatDate(a.createdAt)}</p>
@@ -93,7 +93,7 @@ const AnnouncementsPage: React.FC = () => {
           <Input label="Título *" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
           <Textarea label="Mensagem *" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={5} />
           <Select label="Categoria" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} options={catOptions} />
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50/70 p-3 text-sm font-medium text-slate-700">
             <input type="checkbox" checked={form.isPinned} onChange={(e) => setForm({ ...form, isPinned: e.target.checked })} className="rounded" />
             Fixar comunicado
           </label>

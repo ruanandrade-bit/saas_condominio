@@ -79,7 +79,7 @@ const ResidentsPage: React.FC = () => {
           <EmptyState icon={<Users className="w-8 h-8" />} title="Nenhum morador" description="Cadastre moradores para começar."
             action={<Button onClick={openCreate} icon={<Plus className="w-4 h-4" />}>Cadastrar</Button>} />
         ) : (
-          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <div className="surface-card overflow-x-auto">
             <table className="w-full">
               <thead><tr className="bg-slate-50 border-b border-slate-200">
                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Nome</th>
@@ -92,7 +92,12 @@ const ResidentsPage: React.FC = () => {
               <tbody className="divide-y divide-slate-100">
                 {residents.map((r) => (
                   <tr key={r._id} className="hover:bg-slate-50">
-                    <td className="px-5 py-3 text-sm font-medium">{r.name}{r.isFinancialResponsible && <span className="ml-1 text-xs text-blue-600">💰</span>}</td>
+                    <td className="px-5 py-3 text-sm font-medium">
+                      <div className="flex items-center gap-2">
+                        <span>{r.name}</span>
+                        {r.isFinancialResponsible && <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-extrabold text-blue-700 ring-1 ring-blue-100">Financeiro</span>}
+                      </div>
+                    </td>
                     <td className="px-5 py-3 text-sm text-slate-600">{getUnitLabel(r.unitId)}</td>
                     <td className="px-5 py-3 text-sm text-slate-600">{residentTypeLabels[r.type]}</td>
                     <td className="px-5 py-3 text-sm text-slate-500">{r.phone || '-'}</td>
@@ -119,13 +124,13 @@ const ResidentsPage: React.FC = () => {
             <Select label="Tipo" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}
               options={[{ value: 'owner', label: 'Proprietário' }, { value: 'tenant', label: 'Inquilino' }, { value: 'financial_responsible', label: 'Resp. Financeiro' }]} />
           </div>
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50/70 p-3 text-sm font-medium text-slate-700">
             <input type="checkbox" checked={form.isFinancialResponsible} onChange={(e) => setForm({ ...form, isFinancialResponsible: e.target.checked })} className="rounded" />
             Responsável financeiro
           </label>
           {!editing && (
             <>
-              <label className="flex items-center gap-2 text-sm">
+              <label className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50/70 p-3 text-sm font-medium text-slate-700">
                 <input type="checkbox" checked={form.createAccount} onChange={(e) => setForm({ ...form, createAccount: e.target.checked })} className="rounded" />
                 Criar conta de acesso para o morador
               </label>

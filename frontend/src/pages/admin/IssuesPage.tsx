@@ -51,7 +51,7 @@ const IssuesPage: React.FC = () => {
     <div>
       <Header title="Ocorrências" subtitle={`${issues.length} ocorrências`} onMenuClick={onMenuClick} />
       <div className="p-4 sm:p-6 space-y-4 animate-fade-in">
-        <div className="surface-card flex flex-col gap-3 p-4 sm:flex-row">
+        <div className="filter-bar flex flex-col gap-3 sm:flex-row">
           <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
             options={[{ value: 'open', label: 'Aberta' }, { value: 'in_progress', label: 'Em análise' }, { value: 'resolved', label: 'Resolvida' }]} placeholder="Status" />
           <Select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}
@@ -63,7 +63,7 @@ const IssuesPage: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {issues.map((issue) => (
-              <button key={issue._id} onClick={() => openDetail(issue)} className="w-full bg-white rounded-xl border border-slate-200 p-5 text-left hover:shadow-md transition-all cursor-pointer">
+              <button key={issue._id} onClick={() => openDetail(issue)} className="premium-list-card w-full p-5 text-left cursor-pointer">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -93,7 +93,7 @@ const IssuesPage: React.FC = () => {
               <h3 className="font-semibold text-lg">{selected.title}</h3>
               <p className="text-sm text-slate-500">{getUnitLabel(selected.unitId)} • {formatDate(selected.createdAt)}</p>
             </div>
-            <div className="bg-slate-50 rounded-lg p-4">
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
               <p className="text-sm text-slate-700 whitespace-pre-wrap">{selected.description}</p>
             </div>
             <Textarea label="Resposta do síndico" value={response} onChange={(e) => setResponse(e.target.value)} rows={3} placeholder="Escreva sua resposta..." />

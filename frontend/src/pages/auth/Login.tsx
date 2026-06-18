@@ -34,9 +34,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 lg:grid lg:grid-cols-[1.08fr_0.92fr]">
-      <section className="auth-grid relative hidden min-h-screen overflow-hidden bg-slate-950 p-10 lg:flex lg:flex-col xl:p-14">
-        <div className="absolute -left-24 bottom-0 h-96 w-96 rounded-full bg-blue-600/20 blur-[100px]" />
-        <div className="absolute -right-20 top-16 h-80 w-80 rounded-full bg-indigo-500/15 blur-[100px]" />
+      <section className="auth-grid relative hidden min-h-screen overflow-hidden bg-[#111827] bg-[linear-gradient(135deg,rgba(37,99,235,0.22),transparent_42%,rgba(16,185,129,0.16))] p-10 lg:flex lg:flex-col xl:p-14">
         <div className="relative z-10">
           <BrandMark inverted />
         </div>
@@ -46,7 +44,7 @@ const Login: React.FC = () => {
             <Sparkles className="h-3.5 w-3.5" />
             Gestão condominial sem ruído
           </div>
-          <h1 className="max-w-lg text-5xl font-extrabold leading-[1.08] tracking-[-0.055em] text-white xl:text-6xl">
+          <h1 className="max-w-lg text-5xl font-extrabold leading-[1.08] text-white xl:text-6xl">
             Gestão simples.
             <span className="block bg-gradient-to-r from-blue-300 to-indigo-300 bg-clip-text text-transparent">
               Operação profissional.
@@ -58,7 +56,7 @@ const Login: React.FC = () => {
 
           <div className="mt-10 grid grid-cols-2 gap-3">
             {['Financeiro organizado', 'Comunicação centralizada', 'Rotinas mais rápidas', 'Acesso seguro'].map((item) => (
-              <div key={item} className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-white/[0.04] px-3.5 py-3 text-sm font-semibold text-slate-300">
+              <div key={item} className="flex items-center gap-2.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 text-sm font-semibold text-slate-300 backdrop-blur">
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400" />
                 <span>{item}</span>
               </div>
@@ -72,17 +70,16 @@ const Login: React.FC = () => {
         </div>
       </section>
 
-      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f5f7fb] px-5 py-10 sm:px-10">
-        <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f5f7fb] bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(241,245,249,0.78)),linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:auto,34px_34px,34px_34px] px-5 py-10 sm:px-10">
         <div className="relative w-full max-w-[460px] animate-fade-in">
           <div className="mb-8 flex justify-center lg:hidden">
             <BrandMark />
           </div>
 
-          <div className="rounded-[28px] border border-white bg-white/95 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.11)] ring-1 ring-slate-200/70 sm:p-9">
+          <div className="rounded-lg border border-white bg-white/95 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.11)] ring-1 ring-slate-200/70 backdrop-blur sm:p-9">
             <div className="mb-8">
               <p className="eyebrow mb-3">Acesso à plataforma</p>
-              <h2 className="text-3xl font-extrabold tracking-[-0.045em] text-slate-950">Bem-vindo de volta</h2>
+              <h2 className="text-3xl font-extrabold text-slate-950">Bem-vindo de volta</h2>
               <p className="mt-2 text-sm font-medium leading-6 text-slate-500">Entre com suas credenciais para acessar sua gestão.</p>
             </div>
 

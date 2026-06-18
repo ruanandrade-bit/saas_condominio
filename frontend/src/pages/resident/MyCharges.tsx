@@ -38,12 +38,12 @@ const MyCharges: React.FC = () => {
       />
       <div className="p-4 sm:p-6 animate-fade-in">
         {condo?.pixKey && (
-          <div className="mb-5 flex flex-col gap-3 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-5 flex flex-col gap-3 rounded-lg border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-emerald-50 p-4 shadow-soft sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-wider text-blue-600">Pagamento via Pix</p>
               <p className="mt-1 break-all text-sm font-bold text-blue-950">{condo.pixKey}</p>
             </div>
-            <button onClick={copyPix} className="flex self-start items-center gap-1.5 rounded-xl bg-white px-3 py-2 text-xs font-extrabold text-blue-700 shadow-sm ring-1 ring-blue-100 sm:self-auto">
+            <button onClick={copyPix} className="flex self-start items-center gap-1.5 rounded-lg bg-white px-3 py-2 text-xs font-extrabold text-blue-700 shadow-sm ring-1 ring-blue-100 transition-all hover:-translate-y-0.5 hover:shadow-md sm:self-auto">
               <Copy className="h-3.5 w-3.5" />
               Copiar chave
             </button>
@@ -54,8 +54,8 @@ const MyCharges: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {charges.map((ch) => (
-              <div key={ch._id} className={`bg-white rounded-xl border p-5 sm:p-6 ${ch.status === 'late' ? 'border-red-200' : 'border-slate-200'}`}>
-                <div className="flex items-center justify-between">
+              <div key={ch._id} className={`premium-list-card p-5 sm:p-6 ${ch.status === 'late' ? 'border-red-200 ring-1 ring-red-100' : ''}`}>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="font-semibold text-slate-900">{ch.description}</p>
                     <p className="text-sm text-slate-500">Ref: {ch.referenceMonth} • Vence: {formatDate(ch.dueDate)}</p>

@@ -59,7 +59,7 @@ const UnitsPage: React.FC = () => {
           <EmptyState icon={<Home className="w-8 h-8" />} title="Nenhuma unidade" description="Você ainda não cadastrou nenhuma unidade."
             action={<Button onClick={openCreate} icon={<Plus className="w-4 h-4" />}>Cadastrar</Button>} />
         ) : (
-          <div className="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+          <div className="surface-card overflow-x-auto">
             <table className="w-full">
               <thead><tr className="bg-slate-50 border-b border-slate-200">
                 <th className="px-5 py-3 text-left text-xs font-semibold text-slate-600 uppercase">Bloco</th>

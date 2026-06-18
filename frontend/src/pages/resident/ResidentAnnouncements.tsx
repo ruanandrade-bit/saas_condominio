@@ -32,11 +32,11 @@ const ResidentAnnouncements: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {list.map((a) => (
-              <div key={a._id} className={`bg-white rounded-xl border p-5 sm:p-6 ${a.isPinned ? 'border-blue-300 ring-1 ring-blue-100' : 'border-slate-200'}`}>
+              <div key={a._id} className={`premium-list-card p-5 sm:p-6 ${a.isPinned ? 'border-blue-300 ring-1 ring-blue-100' : ''}`}>
                 <div className="flex items-center gap-2 mb-1">
                   {a.isPinned && <Pin className="w-4 h-4 text-blue-600" />}
                   <h3 className="font-semibold text-slate-900">{a.title}</h3>
-                  <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">{categoryLabels[a.category]}</span>
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600">{categoryLabels[a.category]}</span>
                 </div>
                 <p className="text-sm text-slate-600 whitespace-pre-wrap">{a.message}</p>
                 <p className="text-xs text-slate-400 mt-2">{formatDate(a.createdAt)}</p>

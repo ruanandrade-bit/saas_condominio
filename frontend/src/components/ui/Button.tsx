@@ -12,11 +12,11 @@ const Button: React.FC<ButtonProps> = ({
   children, variant = 'primary', size = 'md', loading = false,
   icon, className = '', disabled, ...props
 }) => {
-  const base = 'inline-flex select-none items-center justify-center whitespace-nowrap rounded-xl font-bold tracking-[-0.01em] transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-1 active:translate-y-px disabled:pointer-events-none disabled:opacity-50';
+  const base = 'inline-flex select-none items-center justify-center whitespace-nowrap rounded-lg font-bold transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-1 active:translate-y-px disabled:pointer-events-none disabled:opacity-50';
 
   const variants: Record<string, string> = {
-    primary: 'border border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-600/20 hover:border-blue-700 hover:bg-blue-700 hover:shadow-blue-700/25 focus:ring-blue-500/20',
-    secondary: 'border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 focus:ring-slate-500/15',
+    primary: 'border border-blue-700 bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg shadow-blue-700/20 hover:-translate-y-0.5 hover:border-blue-800 hover:from-blue-800 hover:to-blue-700 hover:shadow-blue-700/25 focus:ring-blue-500/20',
+    secondary: 'border border-slate-200 bg-white text-slate-700 shadow-sm hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow-md focus:ring-slate-500/15',
     danger: 'border border-red-600 bg-red-600 text-white shadow-md shadow-red-600/15 hover:bg-red-700 focus:ring-red-500/20',
     success: 'border border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-600/15 hover:bg-emerald-700 focus:ring-emerald-500/20',
     ghost: 'border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950 focus:ring-slate-500/15',

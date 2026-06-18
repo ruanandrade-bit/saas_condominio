@@ -15,7 +15,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 'md', text }) =>
 
   return (
     <div className="flex min-h-[240px] flex-col items-center justify-center gap-4 py-12">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-soft ring-1 ring-slate-200/80">
+      <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-white shadow-soft ring-1 ring-slate-200/80">
         <Loader2 className={`${sizes[size]} animate-spin text-blue-600`} />
       </div>
       {text && <p className="text-sm font-semibold text-slate-500">{text}</p>}

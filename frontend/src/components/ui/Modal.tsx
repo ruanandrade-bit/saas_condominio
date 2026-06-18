@@ -28,11 +28,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
           onClick={onClose}
           aria-label="Fechar modal"
         />
-        <div className={`animate-scale-in relative w-full ${sizes[size]} max-h-[92vh] overflow-hidden rounded-t-3xl bg-white shadow-elevated ring-1 ring-slate-950/5 sm:rounded-2xl`}>
-          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 sm:px-6 sm:py-5">
+        <div className={`animate-scale-in relative w-full ${sizes[size]} max-h-[92vh] overflow-hidden rounded-t-2xl bg-white shadow-elevated ring-1 ring-slate-950/5 sm:rounded-lg`}>
+          <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-5 py-4 sm:px-6 sm:py-5">
             <div>
               <p className="eyebrow mb-1">Condomínio em Dia</p>
-              <h3 className="text-lg font-extrabold tracking-[-0.025em] text-slate-950">{title}</h3>
+              <h3 className="text-lg font-extrabold text-slate-950">{title}</h3>
             </div>
             <button onClick={onClose} className="icon-button" aria-label="Fechar modal">
               <X className="w-5 h-5" />

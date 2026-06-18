@@ -58,7 +58,7 @@ const MyIssues: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {issues.map((issue) => (
-              <div key={issue._id} className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
+              <div key={issue._id} className="premium-list-card p-5 sm:p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <h3 className="font-semibold text-slate-900">{issue.title}</h3>
                   <StatusBadge status={issue.status} />
@@ -67,7 +67,7 @@ const MyIssues: React.FC = () => {
                 <p className="text-sm text-slate-600 mb-2">{issue.description}</p>
                 <p className="text-xs text-slate-400">{categoryLabels[issue.category]} • {formatDate(issue.createdAt)}</p>
                 {issue.response && (
-                  <div className="mt-3 bg-blue-50 rounded-lg p-3">
+                  <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50 p-3">
                     <p className="text-xs font-medium text-blue-800 mb-1">Resposta do síndico:</p>
                     <p className="text-sm text-blue-700">{issue.response}</p>
                   </div>

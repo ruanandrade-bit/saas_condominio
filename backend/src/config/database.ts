@@ -57,16 +57,40 @@ const seedTestUsers = async () => {
     unitId: unit._id,
   });
 
-  await Resident.create({
-    condominiumId: condo._id,
-    unitId: unit._id,
-    name: 'Maria Moradora',
-    phone: '11999990002',
-    email: 'morador@teste.com',
-    type: 'owner',
-    isFinancialResponsible: true,
-    userId: residentUser._id,
-  });
+  // Additional Units and Residents for "sindico@teste.com"
+  const blocks = ['Bloco A', 'Bloco B', 'Bloco C'];
+  const residentNames = ['João', 'Maria', 'Pedro', 'Ana', 'Carlos', 'Lucas', 'Julia', 'Marcos', 'Fernanda', 'Rafael'];
+  const lastNames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves', 'Pereira', 'Lima', 'Gomes'];
+
+  for (const block of blocks) {
+    for (let floor = 1; floor <= 5; floor++) {
+      for (let unitNum = 1; unitNum <= 4; unitNum++) {
+        const number = `${floor}0${unitNum}`;
+        const isOccupied = Math.random() > 0.3;
+
+        const newUnit = await Unit.create({
+          condominiumId: condo._id,
+          block,
+          number,
+          status: isOccupied ? 'occupied' : 'empty',
+          notes: '',
+        });
+
+        if (isOccupied) {
+          const name = `${residentNames[Math.floor(Math.random() * residentNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
+          await Resident.create({
+            condominiumId: condo._id,
+            unitId: newUnit._id,
+            name,
+            phone: `1199999${Math.floor(1000 + Math.random() * 9000)}`,
+            email: `morador.${block.replace(' ', '').toLowerCase()}${number}@teste.com`,
+            type: Math.random() > 0.7 ? 'tenant' : 'owner',
+            isFinancialResponsible: true,
+          });
+        }
+      }
+    }
+  }
 
   console.log('\n  ══════════════════════════════════════════');
   console.log('  🧪 MODO DE TESTE — usuários criados:');

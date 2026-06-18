@@ -13,7 +13,7 @@ const Input: React.FC<InputProps> = ({ label, error, icon, className = '', conta
   return (
     <div className={`w-full ${containerClassName}`}>
       {label && (
-        <label htmlFor={inputId} className="mb-2 block text-xs font-bold tracking-[-0.01em] text-slate-700">
+        <label htmlFor={inputId} className="mb-2 block text-xs font-bold text-slate-700">
           {label}
         </label>
       )}
@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({ label, error, icon, className = '', conta
         )}
         <input
           id={inputId}
-          className={`min-h-11 w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2.5 text-sm font-medium text-slate-950 shadow-inner shadow-slate-900/[0.015] outline-none transition-all placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 ${icon ? 'pl-11' : ''} ${error ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10' : ''} ${className}`}
+          className={`min-h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-medium text-slate-950 shadow-sm shadow-slate-900/[0.018] outline-none transition-all placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 hover:shadow-md focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 ${icon ? 'pl-11' : ''} ${error ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10' : ''} ${className}`}
           {...props}
         />
       </div>

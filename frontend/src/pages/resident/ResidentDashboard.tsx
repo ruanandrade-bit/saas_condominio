@@ -30,14 +30,13 @@ const ResidentDashboard: React.FC = () => {
     <div>
       <Header title="Meu Painel" subtitle="Bem-vindo ao Condomínio em Dia" onMenuClick={onMenuClick} />
       <div className="animate-fade-in space-y-6 p-4 sm:p-6">
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-700 via-blue-700 to-indigo-800 px-6 py-7 text-white shadow-xl shadow-blue-900/15 sm:px-8">
-          <div className="absolute -right-14 -top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+        <section className="premium-hero relative overflow-hidden rounded-lg px-6 py-7 text-white shadow-xl shadow-blue-900/10 sm:px-8">
           <div className="relative">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-extrabold text-blue-100">
               <CheckCircle2 className="h-3.5 w-3.5" />
               Área do morador
             </div>
-            <h2 className="text-2xl font-extrabold tracking-[-0.04em] sm:text-3xl">Sua rotina condominial, sem complicação.</h2>
+            <h2 className="text-2xl font-extrabold sm:text-3xl">Sua rotina condominial, sem complicação.</h2>
             <p className="mt-2 max-w-2xl text-sm font-medium leading-6 text-blue-100/75">
               Consulte cobranças, acompanhe ocorrências e organize suas reservas em um único lugar.
             </p>
@@ -66,7 +65,9 @@ const ResidentDashboard: React.FC = () => {
               </div>
             )) : (
               <div className="flex min-h-32 flex-col items-center justify-center px-5 py-8 text-center">
-                <CheckCircle2 className="mb-3 h-7 w-7 text-emerald-500" />
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-50 text-emerald-500">
+                  <CheckCircle2 className="h-6 w-6" />
+                </div>
                 <p className="text-sm font-bold text-slate-700">Nenhuma cobrança pendente</p>
               </div>
             )}
@@ -83,7 +84,9 @@ const ResidentDashboard: React.FC = () => {
               </div>
             )) : (
               <div className="flex min-h-32 flex-col items-center justify-center px-5 py-8 text-center">
-                <CalendarDays className="mb-3 h-7 w-7 text-slate-300" />
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-blue-500">
+                  <CalendarDays className="h-6 w-6" />
+                </div>
                 <p className="text-sm font-bold text-slate-700">Nenhuma reserva agendada</p>
               </div>
             )}

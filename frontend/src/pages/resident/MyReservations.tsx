@@ -57,8 +57,8 @@ const MyReservations: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {list.map((r) => (
-              <div key={r._id} className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-4">
+              <div key={r._id} className="premium-list-card p-5 sm:p-6">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-semibold text-slate-900">{r.area}</h3>

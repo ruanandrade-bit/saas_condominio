@@ -6,8 +6,9 @@ import DashboardPanel from '../../components/dashboard/DashboardPanel';
 import StatusBadge from '../../components/ui/StatusBadge';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import {
-  AlertCircle, AlertTriangle, ArrowUpRight, CalendarDays, CheckCircle2,
-  DollarSign, Home, Megaphone, TrendingUp,
+  AlertTriangle, ArrowUpRight, CalendarDays,
+  DollarSign, Megaphone, Wallet, Clock, Building2, Bell,
+  FileCheck2, ShieldCheck, Send
 } from 'lucide-react';
 import { formatCurrency, formatDate, getUnitLabel } from '../../utils/helpers';
 import api from '../../services/api';
@@ -38,30 +39,38 @@ const AdminDashboard: React.FC = () => {
     <div>
       <Header title="Dashboard" subtitle="Visão geral do seu condomínio" onMenuClick={onMenuClick} />
       <div className="animate-fade-in space-y-6 p-4 sm:p-6">
-        <section className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-7 text-white shadow-xl shadow-slate-950/10 sm:px-8">
-          <div className="absolute -right-16 -top-24 h-72 w-72 rounded-full bg-blue-600/25 blur-3xl" />
-          <div className="absolute bottom-0 right-1/3 h-32 w-32 rounded-full bg-indigo-500/15 blur-2xl" />
+        <section className="premium-hero relative overflow-hidden rounded-lg px-6 py-7 text-white shadow-xl shadow-slate-950/10 sm:px-8">
           <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[11px] font-extrabold text-emerald-300">
-                <CheckCircle2 className="h-3.5 w-3.5" />
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
                 Operação centralizada
               </div>
-              <h2 className="max-w-2xl text-2xl font-extrabold tracking-[-0.045em] sm:text-3xl">
+              <h2 className="max-w-2xl text-2xl font-extrabold sm:text-3xl">
                 Tudo o que importa, em uma visão clara.
               </h2>
               <p className="mt-2 max-w-2xl text-sm font-medium leading-6 text-slate-400">
-                Acompanhe financeiro, unidades e solicitações sem perder tempo alternando entre planilhas e mensagens.
+                Acompanhe financeiro, unidades e solicitações sem perder tempo <br className="hidden sm:block" /> alternando entre planilhas e mensagens.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:flex">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Unidades</p>
-                <p className="mt-1 text-xl font-extrabold">{data?.stats.totalUnits || 0}</p>
+              <div className="flex min-w-[140px] items-center gap-3 rounded-lg border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur-md transition-colors hover:bg-white/[0.09]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-blue-300">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unidades</p>
+                  <p className="text-xl font-extrabold">{data?.stats.totalUnits || 0}</p>
+                </div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Pendências</p>
-                <p className="mt-1 text-xl font-extrabold">{(data?.stats.openIssues || 0) + (data?.stats.pendingReservations || 0)}</p>
+              <div className="flex min-w-[140px] items-center gap-3 rounded-lg border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur-md transition-colors hover:bg-white/[0.09]">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-emerald-300">
+                  <Bell className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pendências</p>
+                  <p className="text-xl font-extrabold">{(data?.stats.openIssues || 0) + (data?.stats.pendingReservations || 0)}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -69,11 +78,11 @@ const AdminDashboard: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           <DashboardCard title="Recebido no mês" value={formatCurrency(data?.stats.receivedThisMonth || 0)} icon={<DollarSign className="w-5 h-5" />} color="green" />
-          <DashboardCard title="A receber" value={formatCurrency(data?.stats.toReceive || 0)} icon={<TrendingUp className="w-5 h-5" />} color="blue" />
-          <DashboardCard title="Em atraso" value={formatCurrency(data?.stats.late || 0)} icon={<AlertCircle className="w-5 h-5" />} color="red" />
-          <DashboardCard title="Unidades" value={data?.stats.totalUnits || 0} icon={<Home className="w-5 h-5" />} color="slate" />
-          <DashboardCard title="Ocorrências" value={data?.stats.openIssues || 0} icon={<AlertTriangle className="w-5 h-5" />} color="yellow" />
-          <DashboardCard title="Reservas" value={data?.stats.pendingReservations || 0} icon={<CalendarDays className="w-5 h-5" />} color="purple" />
+          <DashboardCard title="A receber" value={formatCurrency(data?.stats.toReceive || 0)} icon={<Wallet className="w-5 h-5" />} color="blue" />
+          <DashboardCard title="Em atraso" value={formatCurrency(data?.stats.late || 0)} icon={<Clock className="w-5 h-5" />} color="red" />
+          <DashboardCard title="Unidades" value={data?.stats.totalUnits || 0} icon={<Building2 className="w-5 h-5" />} color="purple" />
+          <DashboardCard title="Ocorrências" value={data?.stats.openIssues || 0} icon={<AlertTriangle className="w-5 h-5" />} color="orange" />
+          <DashboardCard title="Reservas" value={data?.stats.pendingReservations || 0} icon={<CalendarDays className="w-5 h-5" />} color="pink" />
         </div>
 
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
@@ -93,7 +102,9 @@ const AdminDashboard: React.FC = () => {
                 ))
               ) : (
                 <div className="flex min-h-36 flex-col items-center justify-center px-5 py-8 text-center">
-                  <CheckCircle2 className="mb-3 h-7 w-7 text-emerald-500" />
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-50 text-emerald-500">
+                    <FileCheck2 className="h-6 w-6" />
+                  </div>
                   <p className="text-sm font-bold text-slate-700">Nenhuma cobrança atrasada</p>
                   <p className="mt-1 text-xs font-medium text-slate-400">O financeiro está em dia por aqui.</p>
                 </div>
@@ -113,7 +124,9 @@ const AdminDashboard: React.FC = () => {
                 ))
               ) : (
                 <div className="flex min-h-36 flex-col items-center justify-center px-5 py-8 text-center">
-                  <CheckCircle2 className="mb-3 h-7 w-7 text-emerald-500" />
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-orange-50 text-orange-500">
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
                   <p className="text-sm font-bold text-slate-700">Nenhuma ocorrência aberta</p>
                   <p className="mt-1 text-xs font-medium text-slate-400">As solicitações estão sob controle.</p>
                 </div>
@@ -133,7 +146,9 @@ const AdminDashboard: React.FC = () => {
                 ))
               ) : (
                 <div className="flex min-h-36 flex-col items-center justify-center px-5 py-8 text-center">
-                  <CalendarDays className="mb-3 h-7 w-7 text-slate-300" />
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-fuchsia-50 text-fuchsia-500">
+                    <CalendarDays className="h-6 w-6" />
+                  </div>
                   <p className="text-sm font-bold text-slate-700">Nenhuma reserva pendente</p>
                   <p className="mt-1 text-xs font-medium text-slate-400">Novas solicitações aparecerão aqui.</p>
                 </div>
@@ -159,7 +174,9 @@ const AdminDashboard: React.FC = () => {
                 ))
               ) : (
                 <div className="flex min-h-36 flex-col items-center justify-center px-5 py-8 text-center">
-                  <Megaphone className="mb-3 h-7 w-7 text-slate-300" />
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-blue-500">
+                    <Send className="h-6 w-6" />
+                  </div>
                   <p className="text-sm font-bold text-slate-700">Nenhum comunicado recente</p>
                   <p className="mt-1 text-xs font-medium text-slate-400">Suas publicações aparecerão aqui.</p>
                 </div>

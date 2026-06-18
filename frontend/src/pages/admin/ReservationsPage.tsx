@@ -42,8 +42,8 @@ const ReservationsPage: React.FC = () => {
         ) : (
           <div className="space-y-3">
             {list.map((r) => (
-              <div key={r._id} className="bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-4">
+              <div key={r._id} className="premium-list-card p-5 sm:p-6">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-semibold text-slate-900">{r.area}</h3>
@@ -55,7 +55,7 @@ const ReservationsPage: React.FC = () => {
                     {r.notes && <p className="text-sm text-slate-600 mt-1">{r.notes}</p>}
                   </div>
                   {r.status === 'pending' && (
-                    <div className="flex gap-1 flex-shrink-0">
+                    <div className="flex flex-shrink-0 gap-2">
                       <Button size="sm" variant="success" onClick={() => approve(r._id)} icon={<CheckCircle className="w-3.5 h-3.5" />}>Aprovar</Button>
                       <Button size="sm" variant="danger" onClick={() => reject(r._id)} icon={<XCircle className="w-3.5 h-3.5" />}>Recusar</Button>
                     </div>

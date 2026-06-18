@@ -9,13 +9,14 @@
 }
 
 html {
-  background: #f4f7fb;
+  background: #f6f8fc;
 }
 
 body {
   min-width: 320px;
   font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-  background-color: #f4f7fb;
+  background:
+    linear-gradient(135deg, #f8fbff 0%, #f5f7fb 46%, #f0f7f3 100%);
   color: #0f172a;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -46,7 +47,7 @@ a {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -56,7 +57,7 @@ a {
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -65,33 +66,42 @@ a {
   50% { opacity: 0.7; }
 }
 
-.animate-fade-in { animation: fadeIn 0.3s ease-out; }
-.animate-slide-in { animation: slideIn 0.3s ease-out; }
-.animate-scale-in { animation: scaleIn 0.2s ease-out; }
+@keyframes sheen {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(110%); }
+}
+
+.animate-fade-in { animation: fadeIn 0.42s cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-slide-in { animation: slideIn 0.38s cubic-bezier(0.16, 1, 0.3, 1); }
+.animate-scale-in { animation: scaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1); }
 .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
 
 @layer components {
   .app-shell {
     background:
-      radial-gradient(circle at 80% 0%, rgba(219, 234, 254, 0.8), transparent 30rem),
-      #f4f7fb;
+      linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9)),
+      linear-gradient(120deg, rgba(37, 99, 235, 0.06), rgba(16, 185, 129, 0.05), rgba(245, 158, 11, 0.04)),
+      #f6f8fc;
   }
 
   .app-main {
-    background: transparent;
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.024) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.024) 1px, transparent 1px);
+    background-size: 28px 28px;
     scrollbar-gutter: stable;
   }
 
   .surface-card {
-    @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft;
+    @apply rounded-lg border border-slate-200/80 bg-white/95 shadow-soft backdrop-blur;
   }
 
   .eyebrow {
-    @apply text-[11px] font-extrabold uppercase tracking-[0.18em] text-blue-600;
+    @apply text-[11px] font-extrabold uppercase tracking-[0.14em] text-blue-700;
   }
 
   .icon-button {
-    @apply inline-flex h-9 w-9 items-center justify-center rounded-xl border border-transparent text-slate-400 transition-all duration-200 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30;
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-slate-400 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-200 hover:bg-white hover:text-slate-800 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/25;
   }
 
   .auth-grid {
@@ -99,6 +109,22 @@ a {
       linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: 36px 36px;
+  }
+
+  .premium-hero {
+    background:
+      linear-gradient(135deg, rgba(8, 13, 38, 0.98), rgba(24, 40, 88, 0.96) 54%, rgba(20, 83, 45, 0.9)),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+  }
+
+  .premium-list-card {
+    @apply rounded-lg border border-slate-200/80 bg-white/95 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-elevated;
+  }
+
+  .filter-bar {
+    @apply rounded-lg border border-slate-200/80 bg-white/90 p-4 shadow-soft backdrop-blur;
   }
 }
 
@@ -111,8 +137,15 @@ a {
 
 .app-main [class~="bg-white"][class~="rounded-xl"][class~="border"] {
   border-color: rgba(226, 232, 240, 0.9);
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02), 0 10px 30px rgba(15, 23, 42, 0.035);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02), 0 12px 34px rgba(15, 23, 42, 0.045);
+  backdrop-filter: blur(10px);
+}
+
+.app-main [class~="overflow-x-auto"] {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02), 0 14px 42px rgba(15, 23, 42, 0.055);
 }
 
 .app-main table {
@@ -123,15 +156,15 @@ a {
 }
 
 .app-main table thead tr {
-  background: #f8fafc;
+  background: linear-gradient(180deg, #f8fafc, #f4f7fb);
 }
 
 .app-main table th {
-  padding: 0.85rem 1.25rem;
+  padding: 0.9rem 1.25rem;
   color: #64748b;
   font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -142,7 +175,7 @@ a {
 }
 
 .app-main table tbody tr {
-  transition: background-color 160ms ease;
+  transition: background-color 160ms ease, transform 160ms ease;
 }
 
 .app-main table tbody tr:hover {
@@ -159,7 +192,7 @@ a {
   width: 2.25rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   transition: all 160ms ease;
 }
 
@@ -172,8 +205,9 @@ a {
 
 .app-main [class~="space-y-3"] > [class~="bg-white"][class~="rounded-xl"][class~="border"] {
   border-color: rgba(226, 232, 240, 0.9);
-  border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02), 0 8px 24px rgba(15, 23, 42, 0.035);
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02), 0 8px 24px rgba(15, 23, 42, 0.04);
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
@@ -181,6 +215,46 @@ a {
   transform: translateY(-1px);
   border-color: #cbd5e1;
   box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
+}
+
+.app-main [class~="surface-card"]:not([class~="overflow-x-auto"]),
+.app-main [class~="premium-list-card"],
+.app-main [class~="filter-bar"] {
+  position: relative;
+  overflow: hidden;
+}
+
+.app-main [class~="surface-card"]:not([class~="overflow-x-auto"])::before,
+.app-main [class~="premium-list-card"]::before,
+.app-main [class~="filter-bar"]::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translateX(-110%);
+  width: 42%;
+}
+
+.app-main [class~="surface-card"]:not([class~="overflow-x-auto"]):hover::before,
+.app-main [class~="premium-list-card"]:hover::before,
+.app-main [class~="filter-bar"]:hover::before {
+  animation: sheen 1.1s ease;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
 }
 
 @media (min-width: 640px) {

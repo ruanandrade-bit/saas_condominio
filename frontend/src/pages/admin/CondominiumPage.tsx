@@ -66,11 +66,11 @@ const CondominiumPage: React.FC = () => {
         <div className="grid max-w-5xl gap-6 xl:grid-cols-[minmax(0,1fr)_280px]">
           <div className="surface-card overflow-hidden">
             <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
                 <Building2 className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-base font-extrabold tracking-[-0.025em] text-slate-950">Dados do condomínio</h2>
+                <h2 className="text-base font-extrabold text-slate-950">Dados do condomínio</h2>
                 <p className="mt-0.5 text-xs font-medium text-slate-500">Informações exibidas nas rotinas administrativas</p>
               </div>
             </div>
@@ -87,7 +87,7 @@ const CondominiumPage: React.FC = () => {
           </div>
 
           <aside className="space-y-4">
-            <div className="rounded-2xl bg-slate-950 p-5 text-white shadow-lg shadow-slate-950/10">
+            <div className="premium-hero rounded-lg p-5 text-white shadow-lg shadow-slate-950/10">
               <MapPin className="h-5 w-5 text-blue-400" />
               <h3 className="mt-4 text-sm font-extrabold">Identidade da gestão</h3>
               <p className="mt-2 text-xs font-medium leading-5 text-slate-400">
